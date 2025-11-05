@@ -69,4 +69,16 @@ public class SalesItemTest
         assertEquals("test name", salesIte1.getName());
         assertEquals(1000, salesIte1.getPrice());
     }
+    
+    @Test
+    public void testDuplicateAuthorComment()
+    {
+        SalesItem item = new SalesItem("Space Helmet", 9999);
+        boolean firstResult = item.addComment("Daniel", "Fits great!", 5);
+        boolean secondResult = item.addComment("Daniel", "Actually, it's kinda of tight.", 3);
+        assertTrue(firstResult);
+        assertFalse(secondResult);
+        
+        assertEquals(1, item.getNumberOfComments());
+    }
 }
