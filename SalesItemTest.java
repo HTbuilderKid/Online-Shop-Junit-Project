@@ -81,4 +81,14 @@ public class SalesItemTest
         
         assertEquals(1, item.getNumberOfComments());
     }
+    
+    @Test
+    public void testInvalidRatingBoundaries()
+    {
+        SalesItem item = new SalesItem("X-ray Glasses", 2500);
+        boolean resultLow = item.addComment("Daniel", "It doesn't even work.", 0);
+        assertFalse("Rating 0 should be rejected (expected false)", resultLow);
+        boolean resultHigh = item.addComment("Daksh", "Too good to be true!", 6);
+        assertFalse("Rating 6 should be rejected (expected false)", resultHigh);
+    }
 }
