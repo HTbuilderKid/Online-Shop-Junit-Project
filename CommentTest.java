@@ -11,30 +11,50 @@ import org.junit.jupiter.api.Test;
  */
 public class CommentTest
 {
-    /**
-     * 测试类 CommentTest 的默认构造器
-     */
+    private Comment comment;
+    
     public CommentTest()
     {
     }
 
-    /**
-     * 建立测试夹具(test fixture).
-     *
-     * 在每个测试用例方法(test case method)之前调用.
-     */
     @BeforeEach
     public void setUp()
     {
+        comment = new Comment("Daniel", "Great product!", 4);
     }
 
-    /**
-     * 拆解测试夹具(test fixture).
-     *
-     * 在每个测试用例方法(test case method)之后调用.
-     */
     @AfterEach
     public void tearDown()
     {
+        comment = null;
+    }
+    
+    @Test
+    public void testAuthorAndRatingStoredCorrectly()
+    {
+        assertEquals("Daniel", comment.getAuthor());
+        assertEquals(4, comment.getRating());
+    }
+
+    /**
+     * Test that upvote increases the vote count by 1.
+     */
+    @Test
+    public void testUpvoteIncreasesVotes()
+    {
+        int initialVotes = comment.getVoteCount();
+        comment.upvote();
+        assertEquals(initialVotes + 1, comment.getVoteCount());
+    }
+
+    /**
+     * Test that downvote decreases the vote count by 1.
+     */
+    @Test
+    public void testDownvoteDecreasesVotes()
+    {
+        int initialVotes = comment.getVoteCount();
+        comment.downvote();
+        assertEquals(initialVotes - 1, comment.getVoteCount());
     }
 }
