@@ -91,4 +91,41 @@ public class SalesItemTest
         boolean resultHigh = item.addComment("Daksh", "Too good to be true!", 6);
         assertFalse("Rating 6 should be rejected (expected false)", resultHigh);
     }
+    
+    @Test
+    public void testFindMostUsefulComment()
+    {
+        SalesItem item = new SalesItem("Magic Wand Deluxe", 50000);
+        item.addComment("Daniel", "Truly magical", 5);
+        item.addComment("Daksh", "Great product, but a bit expensive", 3);
+        item.addComment("Richard", "No user manual? Seriously?", 1);
+        
+        //Let's simulate the user upvoting Daniel's comment because he's a
+        //trustworthy guy :)
+        item.upvoteComment(0);
+        item.upvoteComment(0);
+        item.upvoteComment(0);
+        
+        //We'll give one to Daksh too
+        item.upvoteComment(1);
+        
+        //Richard's comment gets downvoted because he didn't find the user manual
+        item.downvoteComment(2);
+        item.downvoteComment(2);
+        
+        //So the most helpful comment is Daniel's, since it has 3 upvotes
+        Comment mostHelpful = item.findMostHelpfulComment();
+        assertNotNull("There should be a most helpful comment.", mostHelpful);
+        assertEquals("Daniel", mostHelpful.getAuthor());
+    }
+    
+    @Test
+    public void testFindMostHelpfuLCommentButListIsEmpty()
+    {
+        SalesItem item = new SalesItem("Empty Item", 1000);
+        Comment mostHelpful = item.findMostHelpfulComment();
+        
+        //But since there are no comments, it should be null
+        assertNull("Expected null when there are no comments.", mostHelpful);
+    }
 }
