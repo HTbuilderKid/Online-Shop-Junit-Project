@@ -164,7 +164,7 @@ public class SalesItem
      * Find the comment by the author with the given name.
      * @return The comment if it exists; null if it doesn't.
      */
-    private Comment findCommentByAuthor(String author)
+    public Comment findCommentByAuthor(String author)
     {
         int i = 0;
         while(i < comments.size()) {
