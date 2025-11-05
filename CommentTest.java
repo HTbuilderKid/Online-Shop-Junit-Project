@@ -57,4 +57,15 @@ public class CommentTest
         comment.downvote();
         assertEquals(initialVotes - 1, comment.getVoteCount());
     }
+    
+    //We can also test that getFullDetails() of Comment contains expected text.
+    @Test
+    public void testCommentFullDetails()
+    {
+        Comment c = new Comment("Daniel", "Nice item!", 4);
+        String details = c.getFullDetails();
+        assertTrue(details.contains("Daniel"));
+        assertTrue(details.contains("Nice item!"));
+        assertTrue(details.contains("Rating: ****"));
+    }
 }

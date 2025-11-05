@@ -128,4 +128,34 @@ public class SalesItemTest
         //But since there are no comments, it should be null
         assertNull("Expected null when there are no comments.", mostHelpful);
     }
+    
+    //Let's test that upvoteComment and downvoteComment affect the vote count correctly
+    @Test
+    public void testVotingOnComments()
+    {
+        SalesItem item = new SalesItem("Headphones", 2500);
+        item.addComment("Daniel", "Excellent bass.", 5);
+        
+        //The initial votes should be 0
+        Comment c = item.findMostHelpfulComment();
+        assertEquals(0, c.getVoteCount());
+        
+        //Now we apply the votes
+        item.upvoteComment(0);
+        item.upvoteComment(0);
+        //Let's also test the downvoting
+        item.downvoteComment(0);
+        
+        //Now the votes should be +1
+        assertEquals(1, c.getVoteCount());
+    }
+    
+    //Finally, we can test that comments with duplicate authors are rejected
+    @Test
+    public void testDuplicateAuthorRejected()
+    {
+        SalesItem item = new SalesItem("Tablet S", 12000);
+        assertTrue(item.addComment("Richard", "Pretty good tablet.", 4));
+        assertFalse(item.addComment("Richard", "Actually, even better than I thought!", 5));
+    }
 }
