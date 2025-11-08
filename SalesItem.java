@@ -147,6 +147,7 @@ public class SalesItem
             if(current.getVoteCount() > best.getVoteCount()) {
                 best = current;
             }
+            i++; // I'm adding an increment here to avoid an infinite loop (because it happened while testing my testFindMostHelpfulComment)
         }
         return best;
     }
@@ -157,7 +158,7 @@ public class SalesItem
      */
     private boolean ratingInvalid(int rating)
     {
-        return rating < 0 || rating > 5;
+        return rating < 1 || rating > 5;
     }
     
     /**
